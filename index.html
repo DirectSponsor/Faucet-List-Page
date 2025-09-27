@@ -104,6 +104,9 @@
           height: 22px;
           background-color: #28a745;
           color: white;
+          text-align: center;
+          line-height: 22px;
+          font-weight: bold;
         }
         
         .progressBar div {
@@ -113,21 +116,35 @@
           background-color: #17a2b8;
           box-sizing: border-box;
           color: white;
+          text-align: center;
         }
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            let secs = seconds % 60;
+            secs = secs < 10 ? '0' + secs : secs;
+            return `${mins}:${secs}`;
+        }
+
         function progress(timeleft, timetotal, $element) {
             var progressBarWidth = timeleft * $element.width() / timetotal;
-            $element.find('div').animate({ width: progressBarWidth }, timeleft == timetotal ? 0 : 1000, 'linear').html("");
-            if(timeleft > 0) {
+            var text = formatTime(timeleft);
+            var $div = $element.find('div');
+
+            $div.html(text);
+            $div.animate({ width: progressBarWidth }, timeleft === timetotal ? 0 : 1000, 'linear');
+
+            if (timeleft > 0) {
                 setTimeout(function() {
                     progress(timeleft - 1, timetotal, $element);
                 }, 1000);
             } else {
-                $element.find('div').html("Ready");
+                $div.hide();
+                $element.html('Ready');
             }
-        };
+        }
     </script>
 </head>
 <body>
@@ -181,7 +198,7 @@
                 tableBody.empty();
 
                 if (faucets.length === 0) {
-                    tableBody.append('<tr><td colspan="4">No record found</td></tr>');
+                    tableBody.append('<tr><td colspan="5">No record found</td></tr>');
                     return;
                 }
 
@@ -192,16 +209,25 @@
                     const diff = now - lastClaim;
                     const timeleft = Math.max(0, timerInSeconds - diff);
 
+                    let progressCellHtml;
+                    if (timeleft > 0) {
+                        progressCellHtml = `
+                            <div id="timeBar_all_${faucet.id}" class="progressBar">
+                                <div></div>
+                            </div>
+                        `;
+                    } else {
+                        progressCellHtml = `
+                            <div id="timeBar_all_${faucet.id}" class="progressBar">Ready</div>
+                        `;
+                    }
+
                     const row = `
                         <tr>
                             <td>${faucet.name}</td>
                             <td>${faucet.url}</td>
-                            <td>
-                                <center><span class="text-muted">${faucet.timer} min</span></center>
-                                <div id="timeBar_all_${faucet.id}" class="progressBar">
-                                    <div>Ready</div>
-                                </div>
-                            </td>
+                            <td><center><span class="text-muted">${faucet.timer} min</span></center></td>
+                            <td>${progressCellHtml}</td>
                             <td>
                                 <button class="button-secondary delete-faucet" data-id="${faucet.id}">Delete</button>
                                 <a href="${faucet.url}" target="_blank" class="button-primary claim-faucet" data-id="${faucet.id}">Claim</a>
@@ -250,8 +276,8 @@
                 if (faucet) {
                     faucet.last_claim = Math.floor(Date.now() / 1000);
                     FaucetStore.saveFaucets(faucets);
-                    const timerInSeconds = faucet.timer * 60;
-                    progress(timerInSeconds, timerInSeconds, $('#timeBar_all_' + faucet.id));
+                    // We need to re-render to get the correct progress bar structure
+                    renderFaucets();
                 }
             });
 
