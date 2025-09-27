@@ -118,6 +118,17 @@
           color: white;
           text-align: center;
         }
+
+        #faucet-table {
+            table-layout: fixed;
+            width: 100%;
+        }
+
+        .url-cell {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
@@ -166,7 +177,7 @@
     </form>
 
     <h1>All Faucets</h1>
-    <table id="faucet-table" width="100%" border="1" style="border-collapse: collapse;">
+    <table id="faucet-table" border="1" style="border-collapse: collapse;">
         <thead>
             <tr>
                 <th>Name</th>
@@ -222,10 +233,12 @@
                         `;
                     }
 
+                    const displayUrl = faucet.url.replace(/^https?:\/\//, '');
+
                     const row = `
                         <tr>
                             <td>${faucet.name}</td>
-                            <td>${faucet.url}</td>
+                            <td class="url-cell" title="${faucet.url}">${displayUrl}</td>
                             <td><center><span class="text-muted">${faucet.timer} min</span></center></td>
                             <td>${progressCellHtml}</td>
                             <td>
@@ -272,11 +285,10 @@
             $('#faucet-table').on('click', '.claim-faucet', function() {
                 const faucetId = $(this).data('id');
                 let faucets = FaucetStore.getFaucets();
-                const faucet = faucets.find(f => f.id === faucetId);
+                const faucet = faucets..find(f => f.id === faucetId);
                 if (faucet) {
                     faucet.last_claim = Math.floor(Date.now() / 1000);
                     FaucetStore.saveFaucets(faucets);
-                    // We need to re-render to get the correct progress bar structure
                     renderFaucets();
                 }
             });
