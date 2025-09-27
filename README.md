@@ -29,3 +29,4 @@ You can easily host this application on your own GitHub Pages site:
 4.  **Under "Source," select your `main` (or `master`) branch and click "Save."**
 
 Your site will be published at `https://<your-username>.github.io/<repository-name>/`.
+And here are the instructions to add both files to your new repository:
