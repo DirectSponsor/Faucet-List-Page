@@ -285,7 +285,7 @@
             $('#faucet-table').on('click', '.claim-faucet', function() {
                 const faucetId = $(this).data('id');
                 let faucets = FaucetStore.getFaucets();
-                const faucet = faucets..find(f => f.id === faucetId);
+                const faucet = faucets.find(f => f.id === faucetId);
                 if (faucet) {
                     faucet.last_claim = Math.floor(Date.now() / 1000);
                     FaucetStore.saveFaucets(faucets);
