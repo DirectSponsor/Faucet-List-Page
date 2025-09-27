@@ -29,5 +29,5 @@ You can easily host this application on your own GitHub Pages site:
 4.  **Under "Source," select your `main` (or `master`) branch and click "Save."**
 
 Your site will be published at `https://<your-username>.github.io/<repository-name>/`.
-[https://directsponsor.github.io/Faucet-List-Page/(https://directsponsor.github.io/Faucet-List-Page/)
+https://directsponsor.github.io/Faucet-List-Page/
 
