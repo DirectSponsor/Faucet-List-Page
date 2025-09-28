@@ -148,6 +148,8 @@
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+        var renderFaucets;
+
         function formatTime(seconds) {
             const mins = Math.floor(seconds / 60);
             let secs = seconds % 60;
@@ -168,8 +170,7 @@
                     progress(timeleft - 1, timetotal, $element);
                 }, 1000);
             } else {
-                $div.hide();
-                $element.html('Ready');
+                renderFaucets();
             }
         }
     </script>
@@ -219,17 +220,32 @@
                 }
             };
 
-            function renderFaucets() {
-                const faucets = FaucetStore.getFaucets();
+            renderFaucets = function() {
+                let faucets = FaucetStore.getFaucets();
                 const tableBody = $('#faucet-table tbody');
                 tableBody.empty();
+
+                faucets.sort((a, b) => {
+                    const now = Math.floor(Date.now() / 1000);
+                    const a_last_claim = a.last_claim || 0;
+                    const b_last_claim = b.last_claim || 0;
+                    const a_timeleft = Math.max(0, (a.timer * 60) - (now - a_last_claim));
+                    const b_timeleft = Math.max(0, (b.timer * 60) - (now - b_last_claim));
+                    const a_isReady = a_timeleft === 0;
+                    const b_isReady = b_timeleft === 0;
+
+                    if (a_isReady && !b_isReady) return -1;
+                    if (!a_isReady && b_isReady) return 1;
+                    if (a_isReady && b_isReady) return a.timer - b.timer;
+                    return a_timeleft - b_timeleft;
+                });
 
                 if (faucets.length === 0) {
                     tableBody.append('<tr><td colspan="5">No record found</td></tr>');
                     return;
                 }
 
-                faucets.forEach((faucet, index) => {
+                faucets.forEach((faucet) => {
                     const now = Math.floor(Date.now() / 1000);
                     const lastClaim = faucet.last_claim || 0;
                     const timerInSeconds = faucet.timer * 60;
