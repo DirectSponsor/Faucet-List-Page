@@ -99,24 +99,36 @@
         }
         
         .progressBar {
-          width: 100%;
-          margin: 10px 0;
-          height: 22px;
-          background-color: #28a745;
-          color: white;
-          text-align: center;
-          line-height: 22px;
-          font-weight: bold;
+            width: 100%;
+            margin: 10px 0;
+            height: 22px;
+            background-color: #28a745;
+            color: white;
+            line-height: 22px;
+            font-weight: bold;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
-        
-        .progressBar div {
-          height: 100%;
-          line-height: 22px;
-          width: 0;
-          background-color: #17a2b8;
-          box-sizing: border-box;
-          color: white;
-          text-align: center;
+
+        .progressBar .progress-bar-fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background-color: #17a2b8;
+            z-index: 1;
+        }
+
+        .progressBar .progress-bar-text {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 10px;
+            box-sizing: border-box;
         }
 
         #faucet-table {
@@ -189,10 +201,11 @@
         function progress(timeleft, timetotal, $element) {
             var progressBarWidth = timeleft * $element.width() / timetotal;
             var text = formatTime(timeleft);
-            var $div = $element.find('div');
+            var $fill = $element.find('.progress-bar-fill');
+            var $timeLeft = $element.find('.time-left');
 
-            $div.html(text);
-            $div.animate({ width: progressBarWidth }, timeleft === timetotal ? 0 : 1000, 'linear');
+            $timeLeft.html(text);
+            $fill.animate({ width: progressBarWidth }, timeleft === timetotal ? 0 : 1000, 'linear');
 
             if (timeleft > 0) {
                 setTimeout(function() {
@@ -230,8 +243,6 @@
             <tr>
                 <th>Name</th>
                 <th>Url</th>
-                <th>Set Time</th>
-                <th>Time Till Ready</th>
                 <th>Progress</th>
                 <th>Action</th>
             </tr>
@@ -273,7 +284,7 @@
                 });
 
                 if (faucets.length === 0) {
-                    tableBody.append('<tr><td colspan="6">No record found</td></tr>');
+                    tableBody.append('<tr><td colspan="4">No record found</td></tr>');
                     return;
                 }
 
@@ -288,12 +299,18 @@
                     if (timeleft > 0) {
                         progressCellHtml = `
                             <div id="timeBar_all_${faucet.id}" class="progressBar">
-                                <div></div>
+                                <div class="progress-bar-fill"></div>
+                                <div class="progress-bar-text">
+                                    <span class="time-left">${formatTime(timeleft)}</span>
+                                    <span class="set-time">${faucet.timer} min</span>
+                                </div>
                             </div>
                         `;
                     } else {
                         progressCellHtml = `
-                            <div id="timeBar_all_${faucet.id}" class="progressBar">Ready</div>
+                            <div id="timeBar_all_${faucet.id}" class="progressBar">
+                                Ready (${faucet.timer} min)
+                            </div>
                         `;
                     }
 
@@ -303,8 +320,6 @@
                         <tr>
                             <td>${faucet.name}</td>
                             <td class="url-cell" title="${faucet.url}">${displayUrl}</td>
-                            <td><center><span class="text-muted">${faucet.timer} min</span></center></td>
-                            <td><center><span class="text-muted">${formatTime(timeleft)}</span></center></td>
                             <td>${progressCellHtml}</td>
                             <td>
                                 <button class="button-secondary delete-faucet" data-id="${faucet.id}">Delete</button>
@@ -362,11 +377,11 @@
                 let faucets = FaucetStore.getFaucets();
                 if (faucets.length === 0) {
                     const defaultFaucets = [
-                        { id: Date.now() + 1, name: 'Click for Charity', url: 'https://clickforcharity.net/', timer: 60, last_claim: 0 },
-                        { id: Date.now() + 2, name: 'Direct Sponsor', url: 'https://directsponsor.org/', timer: 60, last_claim: 0 },
-                        { id: Date.now() + 3, name: 'Satoshi Host', url: 'https://satoshihost.com/', timer: 60, last_claim: 0 },
-                        { id: Date.now() + 4, name: 'Rolf Faucet', url: 'https://roflfaucet.com/', timer: 60, last_claim: 0 },
-                        { id: Date.now() + 5, name: '4t2', url: 'https://4t2.co/', timer: 60, last_claim: 0 }
+                        { id: Date.now() + 1, name: 'Click for Charity', url: 'https://clickforcharity.net/', timer: 5, last_claim: 0 },
+                        { id: Date.now() + 2, name: 'Direct Sponsor', url: 'https://directsponsor.org/', timer: 4, last_claim: 0 },
+                        { id: Date.now() + 3, name: 'Satoshi Host', url: 'https://satoshihost.com/', timer: 2, last_claim: 0 },
+                        { id: Date.now() + 4, name: 'Rolf Faucet', url: 'https://roflfaucet.com/', timer: 3, last_claim: 0 },
+                        { id: Date.now() + 5, name: '4t2', url: 'https://4t2.co/', timer: 1, last_claim: 0 }
                     ];
                     FaucetStore.saveFaucets(defaultFaucets);
                 }
