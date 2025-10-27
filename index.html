@@ -186,6 +186,11 @@
                 width: 100%;
             }
         }
+        @media screen and (max-width: 290px) {
+            .progressBar {
+                height: 44px;
+            }
+        }
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
@@ -264,6 +269,7 @@
             };
 
             renderFaucets = function() {
+                const isSmallScreen = window.innerWidth <= 550;
                 let faucets = FaucetStore.getFaucets();
                 const tableBody = $('#faucet-table tbody');
                 tableBody.empty();
@@ -296,20 +302,23 @@
                     const timeleft = Math.max(0, timerInSeconds - diff);
 
                     let progressCellHtml;
+                    const timerUnit = isSmallScreen ? 'm' : ' min';
+                    const readyText = isSmallScreen ? '✓' : 'Ready';
+
                     if (timeleft > 0) {
                         progressCellHtml = `
                             <div id="timeBar_all_${faucet.id}" class="progressBar">
                                 <div class="progress-bar-fill"></div>
                                 <div class="progress-bar-text">
                                     <span class="time-left">${formatTime(timeleft)}</span>
-                                    <span class="set-time">${faucet.timer} min</span>
+                                    <span class="set-time">${faucet.timer}${timerUnit}</span>
                                 </div>
                             </div>
                         `;
                     } else {
                         progressCellHtml = `
                             <div id="timeBar_all_${faucet.id}" class="progressBar">
-                                Ready (${faucet.timer} min)
+                                ${readyText} (${faucet.timer}${timerUnit})
                             </div>
                         `;
                     }
@@ -371,6 +380,14 @@
                     FaucetStore.saveFaucets(faucets);
                     renderFaucets();
                 }
+            });
+
+            let resizeTimer;
+            $(window).on('resize', function() {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(function() {
+                    renderFaucets();
+                }, 250);
             });
 
             function initializeDefaultFaucets() {
