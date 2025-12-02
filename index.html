@@ -3,409 +3,149 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Faucet List</title>
+    <title>satoshihost.top - Free Web Hosting</title>
     <style>
-        .button,
-        .button-primary,
-        .button-secondary {
-            display: inline-block;
-            text-decoration: none;
-            font-size: 13px;
-            line-height: 26px;
-            height: 28px;
+        body {
+            font-family: Arial, sans-serif;
             margin: 0;
-            padding: 0 10px 1px;
-            cursor: pointer;
-            border-width: 1px;
-            border-style: solid;
-            -webkit-appearance: none;
-            -webkit-border-radius: 3px;
-            border-radius: 3px;
-            white-space: nowrap;
-            -webkit-box-sizing: border-box;
-            -moz-box-sizing: border-box;
-            box-sizing: border-box;
-        }
-        
-        .button,
-        .button-secondary {
-            color: #555;
-            border-color: #cccccc;
-            background: #f7f7f7;
-            -webkit-box-shadow: inset 0 1px 0 #fff, 0 1px 0 rgba(0,0,0,.08);
-            box-shadow: inset 0 1px 0 #fff, 0 1px 0 rgba(0,0,0,.08);
-            vertical-align: top;
-        }
-        
-        p .button {
-            vertical-align: baseline;
-        }
-        
-        .button:hover,
-        .button-secondary:hover,
-        .button:focus,
-        .button-secondary:focus {
-            background: #fafafa;
-            border-color: #999;
-            color: #222;
-        }
-        
-        .button:focus,
-        .button-secondary:focus {
-            -webkit-box-shadow: 1px 1px 1px rgba(0,0,0,.2);
-            box-shadow: 1px 1px 1px rgba(0,0,0,.2);
-        }
-        
-        .button:active,
-        .button-secondary:active {
-            background: #eee;
-            border-color: #999;
+            padding: 0;
+            background-color: #f4f4f4;
             color: #333;
-            -webkit-box-shadow: inset 0 2px 5px -3px rgba( 0, 0, 0, 0.5 );
-            box-shadow: inset 0 2px 5px -3px rgba( 0, 0, 0, 0.5 );
         }
-        
-        .button-primary {
-            background: #2ea2cc;
-            border-color: #0074a2;
-            -webkit-box-shadow: inset 0 1px 0 rgba(120,200,230,0.5), 0 1px 0 rgba(0,0,0,.15);
-            box-shadow: inset 0 1px 0 rgba(120,200,230,0.5), 0 1px 0 rgba(0,0,0,.15);
+        header {
+            background-color: #005a9c;
             color: #fff;
-            text-decoration: none;
+            padding: 20px;
+            text-align: center;
         }
-        
-        .button-primary:hover,
-        .button-primary:focus {
-            background: #1e8cbe;
-            border-color: #0074a2;
-            -webkit-box-shadow: inset 0 1px 0 rgba(120,200,230,0.6);
-            box-shadow: inset 0 1px 0 rgba(120,200,230,0.6);
-            color: #fff;
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
         }
-        
-        .button-primary:focus {
-            border-color: #0e3950;
-            -webkit-box-shadow: inset 0 1px 0 rgba(120,200,230,0.6), 1px 1px 2px rgba(0,0,0,0.4);
-            box-shadow: inset 0 1px 0 rgba(120,200,230,0.6), 1px 1px 2px rgba(0,0,0,0.4);
+        main {
+            padding: 20px;
         }
-        
-        .button-primary:active {
-            background: #1b7aa6;
-            border-color: #005684;
-            color: rgba(255,255,255,0.95);
-            -webkit-box-shadow: inset 0 1px 0 rgba(0,0,0,0.1);
-            box-shadow: inset 0 1px 0 rgba(0,0,0,0.1);
-            vertical-align: top;
+        section {
+            background-color: #fff;
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 5px;
         }
-        
-        .progressBar {
-            width: 100%;
-            margin: 10px 0;
-            height: 22px;
-            background-color: #28a745;
-            color: white;
-            line-height: 22px;
-            font-weight: bold;
-            position: relative;
+        h2 {
+            color: #005a9c;
+        }
+        h3 {
+            border-bottom: 2px solid #005a9c;
+            padding-bottom: 10px;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            padding: 5px 0;
+        }
+        #waitlist-form {
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
         }
-
-        .progressBar .progress-bar-fill {
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 100%;
-            background-color: #17a2b8;
-            z-index: 1;
-        }
-
-        .progressBar .progress-bar-text {
-            position: relative;
-            z-index: 2;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            padding: 0 10px;
-            box-sizing: border-box;
-        }
-
-        #faucet-table {
-            table-layout: fixed;
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        #faucet-table th, #faucet-table td {
-            border: none;
-            padding: 12px 8px;
-            text-align: left;
-        }
-
-        #faucet-table th {
-            background-color: #f7f7f7;
-        }
-
-        summary {
-            cursor: pointer;
+        #email {
             padding: 10px;
-            background-color: #f7f7f7;
-            border: 1px solid #cccccc;
-            border-radius: 3px;
             margin-bottom: 10px;
-            font-weight: bold;
+            width: 80%;
+            max-width: 400px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
         }
-
-        summary:hover {
-            background-color: #fafafa;
+        button {
+            background-color: #ffc107;
+            color: #333;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
         }
-
-        #faucet-table tbody tr {
-            background: linear-gradient(to bottom, white, #f7f7f7);
+        button:hover {
+            background-color: #e0a800;
         }
-
-        .url-cell {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        @media screen and (max-width: 600px) {
-            #add-faucet-form td {
-                display: block;
-                width: 100%;
-                box-sizing: border-box;
-            }
-            #add-faucet-form input[type="text"],
-            #add-faucet-form input[type="number"] {
-                width: 100%;
-                margin-bottom: 10px;
-            }
-            #add-faucet-form button {
-                width: 100%;
-            }
-        }
-        @media screen and (max-width: 290px) {
-            .progressBar {
-                height: 44px;
-            }
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            position: relative;
+            bottom: 0;
+            width: 100%;
         }
     </style>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        var renderFaucets;
-
-        function formatTime(seconds) {
-            const mins = Math.floor(seconds / 60);
-            let secs = seconds % 60;
-            secs = secs < 10 ? '0' + secs : secs;
-            return `${mins}:${secs}`;
-        }
-
-        function progress(timeleft, timetotal, $element) {
-            var progressBarWidth = timeleft * $element.width() / timetotal;
-            var text = formatTime(timeleft);
-            var $fill = $element.find('.progress-bar-fill');
-            var $timeLeft = $element.find('.time-left');
-
-            $timeLeft.html(text);
-            $fill.animate({ width: progressBarWidth }, timeleft === timetotal ? 0 : 1000, 'linear');
-
-            if (timeleft > 0) {
-                setTimeout(function() {
-                    progress(timeleft - 1, timetotal, $element);
-                }, 1000);
-            } else {
-                renderFaucets();
-            }
-        }
-    </script>
 </head>
 <body>
-    <h1>Faucet List</h1>
-
-    <details>
-        <summary>Add New Faucet</summary>
-        <form id="add-faucet-form">
-            <table>
-                <tr>
-                    <td>Name</td>
-                    <td><input type="text" id="faucet-name" required></td>
-                    <td>Timer (in minutes)</td>
-                    <td><input type="number" id="faucet-timer" required></td>
-                </tr>
-                <tr>
-                    <td>Url</td>
-                    <td><input type="text" id="faucet-url" required></td>
-                    <td colspan="2"><button type="submit" class="button-primary">Submit</button></td>
-                </tr>
-            </table>
-        </form>
-    </details>
-    <table id="faucet-table">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Url</th>
-                <th>Progress</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Faucet rows will be inserted here by JavaScript -->
-        </tbody>
-    </table>
+    <header>
+        <h1>satoshihost.top</h1>
+        <p>Your free web hosting solution.</p>
+    </header>
+    <main>
+        <section id="hero">
+            <h2>Get free, full-featured web hosting by completing simple tasks.</h2>
+            <p>No ads, no gimmicks. Just powerful hosting in exchange for your help.</p>
+        </section>
+        <section id="features">
+            <h3>Features</h3>
+            <ul>
+                <li>Full DirectAdmin Panel</li>
+                <li>Softaculous App Installer</li>
+                <li>Email Accounts</li>
+                <li>PHP & Databases</li>
+                <li>Suitable for sites under 5000 visitors/month</li>
+            </ul>
+        </section>
+        <section id="waitlist">
+            <h3>Join the Waitlist</h3>
+            <p>Enter your email address to be notified when we launch.</p>
+            <form id="waitlist-form">
+                <input type="email" id="email" placeholder="Enter your email" required>
+                <button type="submit">Join</button>
+            </form>
+            <p id="form-message"></p>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 satoshihost.top. A non-profit project by satoshihost.com, supporting clickforcharity.net.</p>
+    </footer>
 
     <script>
-        $(document).ready(function() {
-            const FaucetStore = {
-                getFaucets: function() {
-                    return JSON.parse(localStorage.getItem('faucets')) || [];
+        document.getElementById('waitlist-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const emailInput = document.getElementById('email');
+            const messageEl = document.getElementById('form-message');
+            const email = emailInput.value;
+
+            messageEl.textContent = ''; // Clear previous messages
+
+            fetch('subscribe.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
                 },
-                saveFaucets: function(faucets) {
-                    localStorage.setItem('faucets', JSON.stringify(faucets));
+                body: JSON.stringify({ email: email }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                messageEl.textContent = data.message;
+                if (data.status === 'success') {
+                    messageEl.style.color = 'green';
+                    emailInput.value = ''; // Clear input on success
+                } else {
+                    messageEl.style.color = 'red';
                 }
-            };
-
-            renderFaucets = function() {
-                const isSmallScreen = window.innerWidth <= 550;
-                let faucets = FaucetStore.getFaucets();
-                const tableBody = $('#faucet-table tbody');
-                tableBody.empty();
-
-                faucets.sort((a, b) => {
-                    const now = Math.floor(Date.now() / 1000);
-                    const a_last_claim = a.last_claim || 0;
-                    const b_last_claim = b.last_claim || 0;
-                    const a_timeleft = Math.max(0, (a.timer * 60) - (now - a_last_claim));
-                    const b_timeleft = Math.max(0, (b.timer * 60) - (now - b_last_claim));
-                    const a_isReady = a_timeleft === 0;
-                    const b_isReady = b_timeleft === 0;
-
-                    if (a_isReady && !b_isReady) return -1;
-                    if (!a_isReady && b_isReady) return 1;
-                    if (a_isReady && b_isReady) return a.timer - b.timer;
-                    return a_timeleft - b_timeleft;
-                });
-
-                if (faucets.length === 0) {
-                    tableBody.append('<tr><td colspan="4">No record found</td></tr>');
-                    return;
-                }
-
-                faucets.forEach((faucet) => {
-                    const now = Math.floor(Date.now() / 1000);
-                    const lastClaim = faucet.last_claim || 0;
-                    const timerInSeconds = faucet.timer * 60;
-                    const diff = now - lastClaim;
-                    const timeleft = Math.max(0, timerInSeconds - diff);
-
-                    let progressCellHtml;
-                    const timerUnit = isSmallScreen ? 'm' : ' min';
-                    const readyText = isSmallScreen ? '✓' : 'Ready';
-
-                    if (timeleft > 0) {
-                        progressCellHtml = `
-                            <div id="timeBar_all_${faucet.id}" class="progressBar">
-                                <div class="progress-bar-fill"></div>
-                                <div class="progress-bar-text">
-                                    <span class="time-left">${formatTime(timeleft)}</span>
-                                    <span class="set-time">${faucet.timer}${timerUnit}</span>
-                                </div>
-                            </div>
-                        `;
-                    } else {
-                        progressCellHtml = `
-                            <div id="timeBar_all_${faucet.id}" class="progressBar">
-                                ${readyText} (${faucet.timer}${timerUnit})
-                            </div>
-                        `;
-                    }
-
-                    const displayUrl = faucet.url.replace(/^https?:\/\//, '');
-
-                    const row = `
-                        <tr>
-                            <td>${faucet.name}</td>
-                            <td class="url-cell" title="${faucet.url}">${displayUrl}</td>
-                            <td>${progressCellHtml}</td>
-                            <td>
-                                <button class="button-secondary delete-faucet" data-id="${faucet.id}">Delete</button>
-                                <a href="${faucet.url}" target="_blank" class="button-primary claim-faucet" data-id="${faucet.id}">Claim</a>
-                            </td>
-                        </tr>
-                    `;
-                    tableBody.append(row);
-
-                    if (timeleft > 0) {
-                        progress(timeleft, timerInSeconds, $('#timeBar_all_' + faucet.id));
-                    }
-                });
-            }
-
-            $('#add-faucet-form').on('submit', function(e) {
-                e.preventDefault();
-                const faucets = FaucetStore.getFaucets();
-                const newFaucet = {
-                    id: Date.now(),
-                    name: $('#faucet-name').val(),
-                    url: $('#faucet-url').val(),
-                    timer: parseInt($('#faucet-timer').val()),
-                    last_claim: 0
-                };
-                faucets.push(newFaucet);
-                FaucetStore.saveFaucets(faucets);
-                this.reset();
-                renderFaucets();
+            })
+            .catch((error) => {
+                messageEl.style.color = 'red';
+                messageEl.textContent = 'An unexpected error occurred. Please try again.';
+                console.error('Error:', error);
             });
-
-            $('#faucet-table').on('click', '.delete-faucet', function() {
-                if (!confirm('Are you sure you want to delete this faucet?')) {
-                    return;
-                }
-                const faucetId = $(this).data('id');
-                let faucets = FaucetStore.getFaucets();
-                faucets = faucets.filter(f => f.id !== faucetId);
-                FaucetStore.saveFaucets(faucets);
-                renderFaucets();
-            });
-
-            $('#faucet-table').on('click', '.claim-faucet', function() {
-                const faucetId = $(this).data('id');
-                let faucets = FaucetStore.getFaucets();
-                const faucet = faucets.find(f => f.id === faucetId);
-                if (faucet) {
-                    faucet.last_claim = Math.floor(Date.now() / 1000);
-                    FaucetStore.saveFaucets(faucets);
-                    renderFaucets();
-                }
-            });
-
-            let resizeTimer;
-            $(window).on('resize', function() {
-                clearTimeout(resizeTimer);
-                resizeTimer = setTimeout(function() {
-                    renderFaucets();
-                }, 250);
-            });
-
-            function initializeDefaultFaucets() {
-                let faucets = FaucetStore.getFaucets();
-                if (faucets.length === 0) {
-                    const defaultFaucets = [
-                        { id: Date.now() + 1, name: 'Click for Charity', url: 'https://clickforcharity.net/', timer: 5, last_claim: 0 },
-                        { id: Date.now() + 2, name: 'Direct Sponsor', url: 'https://directsponsor.org/', timer: 4, last_claim: 0 },
-                        { id: Date.now() + 3, name: 'Satoshi Host', url: 'https://satoshihost.com/', timer: 2, last_claim: 0 },
-                        { id: Date.now() + 4, name: 'Rolf Faucet', url: 'https://roflfaucet.com/', timer: 3, last_claim: 0 },
-                        { id: Date.now() + 5, name: '4t2', url: 'https://4t2.co/', timer: 1, last_claim: 0 }
-                    ];
-                    FaucetStore.saveFaucets(defaultFaucets);
-                }
-            }
-
-            initializeDefaultFaucets();
-            renderFaucets();
         });
     </script>
 </body>
