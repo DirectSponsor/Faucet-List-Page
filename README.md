@@ -1,33 +1,18 @@
-# Faucet List with Timers
+# satoshihost.top
 
-This is a simple, client-side faucet list application that helps you keep track of your favorite faucets and their claim timers. It is a standalone HTML application that runs entirely in your web browser, using `localStorage` to save your data.
+This is a one-page temporary site for a free web hosting service called "satoshihost.top". The service provides a full DirectAdmin panel with all the features of a paid hosting plan, in exchange for users completing simple web tasks like surveys and PTC.
 
-This project was originally a WordPress plugin but has been converted into a static application that can be easily hosted on services like GitHub Pages or run locally.
+## About
+
+satoshihost.top is a non-profit project by satoshihost.com, supporting clickforcharity.net. The hosting is suitable for small sites with under 5000 visitors a month.
 
 ## Features
 
-*   **Add and Remove Faucets:** Easily add your favorite faucets with their name, URL, and a claim timer in minutes.
-*   **Automatic Timers:** Each faucet has a countdown timer that shows when it's ready to be claimed again.
-*   **Persistent Storage:** Your faucet list is saved in your browser's `localStorage`, so it persists between sessions on the same device and browser.
-*   **Client-Side:** No server or database is required. Just open the `index.html` file in a browser.
+*   **Full DirectAdmin Panel:** Manage your website with a powerful and user-friendly control panel.
+*   **Softaculous App Installer:** Easily install popular applications like WordPress, Joomla, and more.
+*   **Email Accounts:** Create and manage your own email accounts.
+*   **PHP & Databases:** Full support for PHP and MySQL databases.
 
-## How to Use
+## Waitlist
 
-1.  **Clone the repository or download the `index.html` file.**
-2.  **Open `index.html` in your web browser.**
-3.  **Add your faucets using the form.**
-
-Your list will be saved automatically and will be there when you reopen the page.
-
-## Hosting on GitHub Pages
-
-You can easily host this application on your own GitHub Pages site:
-
-1.  **Fork this repository.**
-2.  **Go to the "Settings" tab of your forked repository.**
-3.  **Navigate to the "Pages" section.**
-4.  **Under "Source," select your `main` (or `master`) branch and click "Save."**
-
-Your site will be published at `https://<your-username>.github.io/<repository-name>/`.
-https://directsponsor.github.io/Faucet-List-Page/
-
+The site features a waitlist form for users to enter their email address and be notified when the service launches. The email addresses are stored in the browser's `localStorage`.
