@@ -1,0 +1,4 @@
+<Files "waitlist.json">
+    Order Allow,Deny
+    Deny from all
+</Files>

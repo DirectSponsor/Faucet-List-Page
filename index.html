@@ -108,6 +108,7 @@
                 <input type="email" id="email" placeholder="Enter your email" required>
                 <button type="submit">Join</button>
             </form>
+            <p id="form-message"></p>
         </section>
     </main>
     <footer>
@@ -117,18 +118,34 @@
     <script>
         document.getElementById('waitlist-form').addEventListener('submit', function(event) {
             event.preventDefault();
-            const email = document.getElementById('email').value;
-            if (email) {
-                let waitlist = JSON.parse(localStorage.getItem('waitlist')) || [];
-                if (waitlist.includes(email)) {
-                    alert('You are already on the waitlist!');
+            const emailInput = document.getElementById('email');
+            const messageEl = document.getElementById('form-message');
+            const email = emailInput.value;
+
+            messageEl.textContent = ''; // Clear previous messages
+
+            fetch('subscribe.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email: email }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                messageEl.textContent = data.message;
+                if (data.status === 'success') {
+                    messageEl.style.color = 'green';
+                    emailInput.value = ''; // Clear input on success
                 } else {
-                    waitlist.push(email);
-                    localStorage.setItem('waitlist', JSON.stringify(waitlist));
-                    alert('Thank you for joining the waitlist!');
-                    document.getElementById('email').value = '';
+                    messageEl.style.color = 'red';
                 }
-            }
+            })
+            .catch((error) => {
+                messageEl.style.color = 'red';
+                messageEl.textContent = 'An unexpected error occurred. Please try again.';
+                console.error('Error:', error);
+            });
         });
     </script>
 </body>

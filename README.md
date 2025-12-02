@@ -15,4 +15,4 @@ satoshihost.top is a non-profit project by satoshihost.com, supporting clickforc
 
 ## Waitlist
 
-The site features a waitlist form for users to enter their email address and be notified when the service launches. The email addresses are stored in the browser's `localStorage`.
+The site features a waitlist form for users to enter their email address and be notified when the service launches. The email addresses are collected by a PHP script and stored in a `waitlist.json` file on the server. The file is protected from public access.
