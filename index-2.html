@@ -313,7 +313,7 @@
             <div class="container">
                 <h1>Free Web Hosting</h1>
                 <p>Get full-featured web hosting in exchange for simple web tasks. One survey per month can be enough.</p>
-                <a href="#waitlist" class="cta-button">Join Waitlist</a>
+                <a href="#waitlist" class="cta-button">Learn More</a>
             </div>
         </section>
 
@@ -426,56 +426,19 @@
         </section>
 
         <section class="waitlist container" id="waitlist">
-            <h2>Join the Free Hosting Revolution</h2>
-            <p>Get premium web hosting completely free. Complete simple tasks like surveys or PTC offers to maintain your account.</p>
-            
-            <form id="waitlist-form" class="waitlist-form">
-                <input type="email" id="email" class="email-input" placeholder="Enter your email" required>
-                <button type="submit" class="submit-button">Join Waitlist</button>
-            </form>
-            <p id="form-message"></p>
+            <h2>Coming Soon</h2>
+            <p>We're working hard to bring you free, full-featured web hosting in exchange for simple web tasks.</p>
+            <p>Sign up notifications will be available soon. Check back later for updates!</p>
         </section>
     </main>
 
     <footer>
         <div class="container">
-            <p>&copy; 2024 satoshihost.top. Free web hosting by satoshihost.com, supporting <a href="https://clickforcharity.net/">clickforcharity.net</a>.</p>
+            <p>&copy; 2024 satoshihost.top. Free web hosting by satoshihost.com, supporting <a href="https://clickforcharity.net/">clickforcharity.net.</a></span></p>
         </div>
     </footer>
 
     <script>
-        document.getElementById('waitlist-form').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const emailInput = document.getElementById('email');
-            const messageEl = document.getElementById('form-message');
-            const email = emailInput.value;
-
-            messageEl.textContent = ''; // Clear previous messages
-
-            fetch('subscribe.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email: email }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                messageEl.textContent = data.message;
-                if (data.status === 'success') {
-                    messageEl.style.color = '#48bb78';
-                    emailInput.value = ''; // Clear input on success
-                } else {
-                    messageEl.style.color = '#fc8181';
-                }
-            })
-            .catch((error) => {
-                messageEl.style.color = '#fc8181';
-                messageEl.textContent = 'An unexpected error occurred. Please try again.';
-                console.error('Error:', error);
-            });
-        });
-
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
